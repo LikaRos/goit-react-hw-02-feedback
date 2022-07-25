@@ -16,9 +16,15 @@ export class App extends Component {
     bad: 0,
   };
 
+  /* Функция  с формулой*/
+  //   countTotalFeedback = () => {
+  //     const totalFeedback = this.state.good + this.state.neutral + this.state.bad;
+  //     return totalFeedback;
+  //   };
+
   countTotalFeedback = () => {
-    const totalFeedback = this.state.good + this.state.neutral + this.state.bad;
-    return totalFeedback;
+    const totalFeedback = Object.values(this.state);
+    return totalFeedback.reduce((acc, elem) => acc + elem);
   };
 
   countPositiveFeedbackPercentage = () => {
@@ -59,15 +65,18 @@ export class App extends Component {
       >
         <Section title="Please leave feedback">
           <FeedbackOption options={options} onLeaveFeedback={this.onFeedback} />
+          {}
 
-          <Statistics
-            title="Statistics"
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={this.countTotalFeedback()}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
-          />
+          {this.countTotalFeedback() > 0 && (
+            <Statistics
+              title="Statistics"
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
         </Section>
       </div>
     );
